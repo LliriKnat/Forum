@@ -1,0 +1,141 @@
+{% extends "layout/default.html" %}
+
+{% block title %}{{ category.name }}{% endblock title %}
+
+{% block body %}
+<header>
+	{% if not subpath.count('/') %}
+	<h1>Welcome to {{ category.name }} &nbsp<a href="/" class="glyphicon glyphicon-log-in" data-toggle="tooltip"
+	    data-placement="right" title="Return to main" aria-hidden="true"></a></h1>
+	{% else %}
+	<h1>Welcome to {{ category.name }} &nbsp<a href="/category/{{ "/".join(subpath.split('/')[:-1]) }}" class="glyphicon glyphicon-log-in" data-toggle="tooltip"
+																	       data-placement="right" title="Return to {{ subpath.split('/')[:-1].pop() }}" aria-hidden="true"></a></h1>
+	{% endif %}
+</header>
+
+{% if subcategories %}
+	<h2 class="text-center">Subcategories</h2>
+	<div class="wrapper">
+		{% for c in subcategories %}
+			<div><a href="/category/{{ subpath }}/{{ c.name }}">{{ c.name }}</a></div>
+		{% endfor %}
+	</div>
+{% endif %}
+
+<div class="container mt-3">
+	{% if message_count %}
+		<table class="table table-hover table-bordered">
+			<thead class="thead-light">
+				<tr>
+					<th id="Message">Message</th>
+					<th id="Author">Author</th>
+					<th id="Posted_at">Posted at</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for message in messages %}
+				<tr>
+					<td><div>{{ message.text }}</div></td>
+					<td><div>{{ message.user.name }}</div></td>
+					<td><div>{{ message.posted_at.strftime("%Y-%m-%d %H:%M:%S") }}</div></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<nav>
+			<ul class="pagination d-flex justify-content-center">
+				{% if page_count > 1 %}
+				<li class="page-item {% if cur_page == 1 %}disabled{% endif %}">
+					<a class="page-link" href="{{ subpath }}?page={{ cur_page - 1 }}" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+						<span class="sr-only">Previous</span>
+					</a>
+				</li>
+				<li class="page-item {% if cur_page == 1 %}active{% endif %}">
+					<a class="page-link" href="{{ subpath }}?page=1">
+						1
+						{% if cur_page == 1 %}
+							<span class="sr-only">(current)</span>
+						{% endif %}
+					</a>
+				</li>
+				{% endif %}
+
+				{% if lower > 1 %}
+				<li class="page-item disabled">
+					<a class="page-link" href="#">
+						...
+					</a>
+				</li>
+				{% endif %}
+
+				{% for i in range(lower, upper) %}
+					<li class="page-item {% if cur_page == i+1 %}active{% endif %}">
+						<a class="page-link" href="{{ subpath }}?page={{ i+1 }}">
+							{{ i+1 }}
+							{% if cur_page == i+1 %}
+								<span class="sr-only">(current)</span>
+							{% endif %}
+						</a>
+					</li>
+				{% endfor %}
+
+				{% if upper < page_count-1%}
+				<li class="page-item disabled">
+					<a class="page-link" href="#">
+						...
+					</a>
+				</li>
+				{% endif %}
+
+				{% if page_count > 1 %}
+				<li class="page-item {% if cur_page == page_count %}active{% endif %}">
+					<a class="page-link" href="{{ subpath }}?page={{ page_count }}">
+						{{ page_count }}
+						{% if cur_page == page_count %}
+							<span class="sr-only">(current)</span>
+						{% endif %}
+					</a>
+				</li>
+
+				<li class="page-item {% if cur_page == page_count %}disabled{% endif %}">
+					<a class="page-link" href="{{ subpath }}?page={{ cur_page + 1 }}" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+						<span class="sr-only">Next</span>
+					</a>
+				</li>
+				{% endif %}
+			</ul>
+		</nav>
+	{% endif %}
+	<div class="mb-5">
+		<div id="accordion">
+			<br>
+			<div class="card">
+				<div class="card-header text-center" id="headingThree">
+					<h5 class="mb-0">
+						<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
+							aria-expanded="false" aria-controls="collapseThree">
+							Написать сообщение
+						</button>
+					</h5>
+				</div>
+				<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+					<div class="card-body">
+						<form target="_self" method="POST">
+							<div class="form-group">
+								<textarea name="text" rows="3" placeholder="What's up?" required></textarea>
+							</div>
+							<div class="d-flex justify-content-center form-group">
+								<input name="submit" type="submit" class="form-control" id="emailFormInput1"
+									value="Отправить">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock body %}

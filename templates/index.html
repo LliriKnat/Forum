@@ -1,0 +1,39 @@
+{% extends "layout/default.html" %}
+
+{% block title %}Hello, world!{% endblock title %}
+
+{% block body %}
+<header>
+	<h1>Welcome to PPchan!</h1>
+</header>
+
+<h2 class="text-center">Subcategories</h2>
+<div class="wrapper">
+	{% for c in categories %}
+		<div><a href="/category/{{ c.name }}">{{ c.name }}</a></div>
+	{% endfor %}
+</div>
+<div class="container mt-3">
+	<table class="table table-striped table-bordered">
+		<thead class="thead-light">
+			<tr>
+				<th id="Category">Category</th>
+				<th id="Message">Message</th>
+				<th id="Author">Author</th>
+				<th id="Posted_at">Posted at</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for m in messages %}
+		<tr>
+			<td><p><a href="category/{{ m.category.name }}">{{ m.category.name }}</a></p></td>
+			<td><div>{{ m.text }}</div></td>
+			<td><div>{{ m.user.name }}</div></td>
+			<td><div>{{ m.posted_at.strftime("%Y-%m-%d %H:%M:%S") }}</div></td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+{% endblock body %}

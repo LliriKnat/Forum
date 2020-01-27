@@ -1,0 +1,81 @@
+html {
+    font-family: sans-serif;
+}
+  body {
+    margin: 0;
+}
+
+header{
+    background-color: rgb(253, 195, 119);
+}
+
+header a {
+    color: #1a1a1a;
+    width: 70px;
+}
+
+header a:hover {
+    text-decoration: none;
+    color: #737373 !important;
+}
+
+h1 {
+    color: white;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.wrapper {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr) ) ;
+    color: black;
+    margin: 5px;
+    text-align: center;
+}
+
+.wrapper > div{
+    background-color: rgb(216, 214, 214);
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper a {
+	color: #1a1a1a !important;
+}
+
+.wrapper a:hover {
+	text-decoration: none;
+	color: #737373 !important;
+}
+
+textarea{
+    width: 100%;
+}
+
+#emailFormInput1{
+    width: 20%;
+    align-items: center;
+}
+
+thead{
+    width: 100%;
+    
+}
+#Category{
+    width: 15%
+}
+#Message{
+    width: 65%;
+}
+#Author{
+    width:10%;
+}
+#Posted_at{
+    width:10%;
+}
